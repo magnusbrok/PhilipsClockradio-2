@@ -8,8 +8,11 @@ public class ContextClockradio {
     private State currentState;
     private Date mTime;
     private String mDisplayText;
-    public boolean isClockRunning = false;
+    private double amFrequency = 90.8;
+    private double fmFrequency = 30.7;
+    private boolean amChosen = true;
 
+    public boolean isClockRunning = false;
     public static MainUI ui;
 
     public ContextClockradio(MainUI context){
@@ -28,21 +31,21 @@ public class ContextClockradio {
     }
 
     //setState er når vi skifter State
+
     void setState(final State newState) {
         currentState.onExitState(this);
         currentState = newState;
         currentState.onEnterState(this);
         System.out.println("Current state: "+ newState.getClass().getSimpleName());
     }
-
     //Opdaterer kontekst time state og UI
+
     void setTime(Date time){
         mTime = time;
         if(currentState.getClass().getSimpleName().equals("StateStandby")){
             updateDisplayTime();
         }
     }
-
 
     void updateDisplayTime(){
         mDisplayText = mTime.toString().substring(11,16);
@@ -52,6 +55,32 @@ public class ContextClockradio {
     public Date getTime(){
         return mTime;
     }
+
+    public double getAmFrequency() {
+        return amFrequency;
+    }
+
+    public void setAmFrequency(double amFrequency) {
+        this.amFrequency = amFrequency;
+    }
+
+    public double getFmFrequency() {
+        return fmFrequency;
+    }
+
+    public void setFmFrequency(double fmFrequency) {
+        this.fmFrequency = fmFrequency;
+    }
+
+    public boolean isAmChosen() {
+        return amChosen;
+    }
+
+    public void setAmChosen(boolean amChosen) {
+        this.amChosen = amChosen;
+    }
+
+
 
     //Disse metoder bliver kaldt fra UI tråden
     public void onClick_Hour() {

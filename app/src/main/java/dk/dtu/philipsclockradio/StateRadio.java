@@ -2,28 +2,24 @@ package dk.dtu.philipsclockradio;
 
 public class StateRadio extends StateAdapter {
 
-    public double amFrequency = 90.8;
-    public double fmFrequency = 30.7;
-    public boolean amChosen;
-
-
-    public boolean isAmChosen() {
-        return amChosen;
-    }
-
-    public void setAmChosen(boolean amChosen) {
-        this.amChosen = amChosen;
-    }
-
-
+    private double amFrequency;
+    private double fmFrequency;
+    private boolean amChosen;
 
     // FM Gladsaxe (København)	90.8 MHz / 60 kW	93.9 MHz / 60 kW	96.5 MHz / 60 kW
 
-
     @Override
     public void onEnterState(ContextClockradio context) {
-        amChosen = true;
-        context.ui.setDisplayText(amFrequency+"");
+        amChosen = context.isAmChosen();
+        fmFrequency = context.getFmFrequency();
+        amFrequency = context.getAmFrequency();
+
+        if (isAmChosen()) {
+            context.ui.setDisplayText(amFrequency + "");
+
+        } else {
+            context.ui.setDisplayText(context.getFmFrequency()+"");
+        }
     }
 
     /**
@@ -83,7 +79,18 @@ public class StateRadio extends StateAdapter {
      */
     @Override
     public void onLongClick_Power(ContextClockradio context) {
+        context.setAmChosen(isAmChosen());
+        context.setFmFrequency(fmFrequency);
+        context.setAmFrequency(amFrequency);
         context.setState(new StateStandby(context.getTime()));
+    }
+
+    public boolean isAmChosen() {
+        return amChosen;
+    }
+
+    public void setAmChosen(boolean amChosen) {
+        this.amChosen = amChosen;
     }
 }
 
