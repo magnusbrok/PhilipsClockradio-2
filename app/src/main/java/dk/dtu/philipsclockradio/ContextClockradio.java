@@ -8,8 +8,10 @@ public class ContextClockradio {
     private State currentState;
     private Date mTime;
     private String mDisplayText;
-    private double amFrequency = 90.8;
-    private double fmFrequency = 30.7;
+    private double amFrequency = 90.8; // a random default radio
+    private double fmFrequency = 30.7; // a random default radio
+    public double[] amPresets = new double[20];
+    public double[] fmPresets = new double[20];
     private boolean amChosen = true;
 
     public boolean isClockRunning = false;
