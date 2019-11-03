@@ -12,7 +12,7 @@ public class ContextClockradio {
     private double fmFrequency = 30.7; // a random default radio
     public double[] amPresets = new double[20];
     public double[] fmPresets = new double[20];
-    private boolean amChosen = true;
+    private boolean amChosen = false; // Per default the Radio starts on FM connection.
 
     public boolean isClockRunning = false;
     public static MainUI ui;

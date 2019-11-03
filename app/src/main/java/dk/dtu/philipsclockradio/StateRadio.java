@@ -15,11 +15,13 @@ public class StateRadio extends StateAdapter {
         fmFrequency = context.getFmFrequency();
         amFrequency = context.getAmFrequency();
 
+        context.ui.toggleRadioPlaying();
+
         if (isAmChosen()) {
-            context.ui.setDisplayText(amFrequency + "");
+            context.ui.setDisplayText(amFrequency + " AM");
 
         } else {
-            context.ui.setDisplayText(fmFrequency +"");
+            context.ui.setDisplayText(fmFrequency +" FM");
         }
     }
 
@@ -32,11 +34,11 @@ public class StateRadio extends StateAdapter {
 
         if (amChosen) {
             amFrequency -= 0.1;
-            context.ui.setDisplayText(amFrequency + "");
+            context.ui.setDisplayText(amFrequency + " AM");
 
         } else {
             fmFrequency -= 0.1;
-            context.ui.setDisplayText(fmFrequency + "");
+            context.ui.setDisplayText(fmFrequency + " FM");
         }
 
     }
@@ -50,10 +52,10 @@ public class StateRadio extends StateAdapter {
 
         if (amChosen) {
             amFrequency += 0.1;
-            context.ui.setDisplayText(amFrequency + "");
+            context.ui.setDisplayText(amFrequency + " AM");
         } else {
             fmFrequency += 0.1;
-            context.ui.setDisplayText(fmFrequency + "");
+            context.ui.setDisplayText(fmFrequency + " FM");
         }
     }
 
@@ -85,6 +87,7 @@ public class StateRadio extends StateAdapter {
         context.setAmChosen(isAmChosen());
         context.setFmFrequency(fmFrequency);
         context.setAmFrequency(amFrequency);
+        context.ui.toggleRadioPlaying();
         context.setState(new StateStandby(context.getTime()));
     }
 
