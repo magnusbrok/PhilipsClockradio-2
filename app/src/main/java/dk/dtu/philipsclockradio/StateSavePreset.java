@@ -26,10 +26,6 @@ public class StateSavePreset extends StateAdapter {
         } else {
             context.fmPresets[presetNumber-1] = context.getFmFrequency();
         }
-
-
-
-
         // Just used to test if the presets were saved correctly.
         System.out.println("AM PRESETS:" + Arrays.toString(context.amPresets));
         System.out.println("FM PRESETS:" + Arrays.toString(context.fmPresets));
@@ -53,6 +49,5 @@ public class StateSavePreset extends StateAdapter {
             presetNumber = 1;
         }
         context.ui.setDisplayText(presetNumber+"");
-
     }
 }

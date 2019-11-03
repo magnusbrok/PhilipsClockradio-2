@@ -8,6 +8,8 @@ public class StateStandby extends StateAdapter {
     private Date mTime;
     private static Handler mHandler = new Handler();
     private ContextClockradio mContext;
+    private int AL1;
+    private int AL2 = 3;
 
     StateStandby(Date time){
         mTime = time;
@@ -56,11 +58,6 @@ public class StateStandby extends StateAdapter {
     }
 
     @Override
-    public void onClick_AL1(ContextClockradio context) {
-        context.setState(new StateSetAlarm());
-    }
-
-    @Override
     public void onClick_Sleep(ContextClockradio context) {
         context.setState(new StateSleepTimer());
     }
@@ -70,4 +67,56 @@ public class StateStandby extends StateAdapter {
         context.setState(new StateRadio());
     }
 
+    @Override
+    public void onClick_AL1(ContextClockradio context) {
+
+        AL1++;
+
+        switch (AL1) {
+            case 1:
+                context.ui.turnOffLED(AL1 +1);
+                context.ui.turnOnLED(AL1);
+                break;
+            case 2:
+                context.ui.turnOffLED(AL1 -1);
+                context.ui.turnOnLED(AL1);
+                break;
+            case 3:
+                context.ui.turnOffLED(1);
+                context.ui.turnOffLED(2);
+                AL1 =0;
+                break;
+        }
+    }
+
+    @Override
+    public void onClick_AL2(ContextClockradio context) {
+        AL2++;
+
+        switch (AL2) {
+            case 4:
+                context.ui.turnOffLED(AL2 +1);
+                context.ui.turnOnLED(AL2);
+                break;
+            case 5:
+                context.ui.turnOffLED(AL2 -1);
+                context.ui.turnOnLED(AL2);
+                break;
+            case 6:
+                context.ui.turnOffLED(4);
+                context.ui.turnOffLED(5);
+                AL2 =3;
+                break;
+        }
+    }
+
+    @Override
+    public void onLongClick_AL1(ContextClockradio context) {
+        context.setState(new StateSetAlarm());
+    }
+
+    @Override
+    public void onLongClick_AL2(ContextClockradio context) {
+        context.setState(new StateSetAlarm());
+    }
 }
