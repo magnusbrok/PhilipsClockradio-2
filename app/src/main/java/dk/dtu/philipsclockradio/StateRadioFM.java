@@ -53,12 +53,13 @@ public class StateRadioFM extends StateAdapter {
      */
     @Override
     public void onLongClick_Power(ContextClockradio context) {
-        context.setState(new StateSaveFMPreset(fmFrequency));
+        context.setState(new StateStandby(context.getTime()));
     }
 
     @Override
     public void onExitState(ContextClockradio context) {
         context.setFmFrequency(fmFrequency);
+        context.setAmChosen(false);
         context.ui.toggleRadioPlaying();
     }
 

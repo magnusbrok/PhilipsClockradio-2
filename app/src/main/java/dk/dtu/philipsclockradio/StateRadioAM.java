@@ -58,6 +58,7 @@ public class StateRadioAM extends StateAdapter {
     @Override
     public void onExitState(ContextClockradio context) {
         context.setAmFrequency(amFrequency);
+        context.setAmChosen(true);
         context.ui.toggleRadioPlaying();
     }
 

@@ -7,6 +7,12 @@ import java.util.Date;
 public class ContextClockradio {
     private State currentState;
     private Date mTime;
+    private Date alarmOne;
+
+    public  int A1Type;
+
+    private Date alarmTwo;
+    public int A2Type;
     private String mDisplayText;
     private double amFrequency = 90.8; // a random default radio
     private double fmFrequency = 30.7; // a random default radio
@@ -48,7 +54,6 @@ public class ContextClockradio {
             updateDisplayTime();
         }
     }
-
     void updateDisplayTime(){
         mDisplayText = mTime.toString().substring(11,16);
         ui.setDisplayText(mDisplayText);
@@ -74,6 +79,38 @@ public class ContextClockradio {
         this.fmFrequency = fmFrequency;
     }
 
+    public Date getAlarmOne() {
+        return alarmOne;
+    }
+
+    public void setAlarmOne(Date alarmOne) {
+        this.alarmOne = alarmOne;
+    }
+
+    public Date getAlarmTwo() {
+        return alarmTwo;
+    }
+
+    public void setAlarmTwo(Date alarmTwo) {
+        this.alarmTwo = alarmTwo;
+    }
+
+    public int getA1Type() {
+        return A1Type;
+    }
+
+    public void setA1Type(int a1Type) {
+        A1Type = a1Type;
+    }
+
+    public int getA2Type() {
+        return A2Type;
+    }
+
+    public void setA2Type(int a2Type) {
+        A2Type = a2Type;
+    }
+
     public boolean isAmChosen() {
         return amChosen;
     }
@@ -81,6 +118,7 @@ public class ContextClockradio {
     public void setAmChosen(boolean amChosen) {
         this.amChosen = amChosen;
     }
+
 
 
 

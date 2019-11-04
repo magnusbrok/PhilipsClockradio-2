@@ -5,21 +5,21 @@ import java.util.Date;
 
 public class StateSetAlarm extends StateAdapter {
 
-    Date alarmTime;
-    String displayText;
+    private Date alarm;
+    private String displayText;
 
 
     @Override
     public void onEnterState(ContextClockradio context) {
 
 
-        if(alarmTime == null){
+        if(alarm == null){
             Calendar date = Calendar.getInstance();
             date.set(2019, 1, 1, 16, 00);
-            alarmTime = date.getTime();
+            alarm = date.getTime();
         }
         context.ui.turnOnTextBlink();
-        context.ui.setDisplayText(alarmTime.toString().substring(11,16));
+        context.ui.setDisplayText(alarm.toString().substring(11,16));
     }
 
     @Override
@@ -27,9 +27,9 @@ public class StateSetAlarm extends StateAdapter {
 
 
         //Gets current timestamp (Date)
-        alarmTime.setTime(alarmTime.getTime() + 3600000);
+        alarm.setTime(alarm.getTime() + 3600000);
 
-        displayText = alarmTime.toString().substring(11,16);
+        displayText = alarm.toString().substring(11,16);
         context.ui.setDisplayText(displayText);
 
     }
@@ -38,9 +38,9 @@ public class StateSetAlarm extends StateAdapter {
     public void onClick_Min(ContextClockradio context) {
 
         //Gets current timestamp (Date)
-        alarmTime.setTime(alarmTime.getTime() + 60000);
+        alarm.setTime(alarm.getTime() + 60000);
 
-        displayText = alarmTime.toString().substring(11,16);
+        displayText = alarm.toString().substring(11,16);
         context.ui.setDisplayText(displayText);
     }
 
@@ -48,6 +48,7 @@ public class StateSetAlarm extends StateAdapter {
     public void onLongClick_AL1(ContextClockradio context) {
         context.ui.turnOffLED(1);
         context.ui.turnOnLED(2);
+        context.setAlarmOne(alarm);
         context.setState(new StateStandby(context.getTime()));
     }
 
@@ -55,13 +56,20 @@ public class StateSetAlarm extends StateAdapter {
     public void onLongClick_AL2(ContextClockradio context) {
         context.ui.turnOffLED(4);
         context.ui.turnOnLED(5);
+        context.setAlarmTwo(alarm);
         context.setState(new StateStandby(context.getTime()));
     }
 
     @Override
     public void onExitState(ContextClockradio context) {
         context.ui.turnOffTextBlink();
-        System.out.println("original time: " + context.getTime().toString());
-        System.out.println("ALARM: " + alarmTime.toString());
+        System.out.println("\noriginal time: " + context.getTime().toString());
+
+        if (context.getAlarmOne() != null) {
+            System.out.println("AL1: " + context.getAlarmOne().toString());
+        }
+        if (context.getAlarmTwo() != null) {
+            System.out.println("AL2: " + context.getAlarmTwo().toString());
+        }
     }
 }
