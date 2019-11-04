@@ -1,5 +1,7 @@
 package dk.dtu.philipsclockradio;
 
+import dk.dtu.philipsclockradio.ContextClockradio;
+
 public interface State {
     void onEnterState(ContextClockradio context);
     void onExitState(ContextClockradio context);

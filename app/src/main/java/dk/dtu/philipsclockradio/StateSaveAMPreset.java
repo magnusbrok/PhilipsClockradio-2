@@ -2,13 +2,13 @@ package dk.dtu.philipsclockradio;
 
 import java.util.Arrays;
 
-public class StateSavePreset extends StateAdapter {
+public class StateSaveAMPreset extends StateAdapter {
 
     private int presetNumber = 1;
-    private boolean amChosen;
+    private double frequency;
 
-    StateSavePreset(boolean amChosen){
-        this.amChosen = amChosen;
+    StateSaveAMPreset(double frequency){
+        this.frequency = frequency;
     }
 
     @Override
@@ -19,13 +19,10 @@ public class StateSavePreset extends StateAdapter {
 
     @Override
     public void onExitState(ContextClockradio context) {
-        context.ui.turnOffTextBlink();
 
-        if (amChosen) {
-            context.amPresets[presetNumber - 1] = context.getAmFrequency();
-        } else {
-            context.fmPresets[presetNumber-1] = context.getFmFrequency();
-        }
+        context.ui.turnOffTextBlink();
+        context.amPresets[presetNumber-1] = frequency;
+
         // Just used to test if the presets were saved correctly.
         System.out.println("AM PRESETS:" + Arrays.toString(context.amPresets));
         System.out.println("FM PRESETS:" + Arrays.toString(context.fmPresets));
@@ -33,7 +30,7 @@ public class StateSavePreset extends StateAdapter {
 
     @Override
     public void onLongClick_Preset(ContextClockradio context) {
-        context.setState(new StateRadio());
+        context.setState(new StateRadioAM());
     }
 
     /**

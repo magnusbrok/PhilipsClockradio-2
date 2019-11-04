@@ -1,28 +1,18 @@
 package dk.dtu.philipsclockradio;
 
+public class StateRadioFM extends StateAdapter {
 
-public class StateRadio extends StateAdapter {
 
-    private double amFrequency;
     private double fmFrequency;
-    private boolean amChosen;
 
     // FM Gladsaxe (København)	90.8 MHz / 60 kW	93.9 MHz / 60 kW	96.5 MHz / 60 kW
 
     @Override
     public void onEnterState(ContextClockradio context) {
-        amChosen = context.isAmChosen();
         fmFrequency = context.getFmFrequency();
-        amFrequency = context.getAmFrequency();
 
         context.ui.toggleRadioPlaying();
-
-        if (isAmChosen()) {
-            context.ui.setDisplayText(amFrequency + " AM");
-
-        } else {
-            context.ui.setDisplayText(fmFrequency +" FM");
-        }
+        context.ui.setDisplayText(fmFrequency +" FM");
     }
 
     /**
@@ -32,15 +22,9 @@ public class StateRadio extends StateAdapter {
     @Override
     public void onClick_Hour(ContextClockradio context) {
 
-        if (amChosen) {
-            amFrequency -= 0.1;
-            context.ui.setDisplayText(amFrequency + " AM");
 
-        } else {
             fmFrequency -= 0.1;
             context.ui.setDisplayText(fmFrequency + " FM");
-        }
-
     }
 
     /**
@@ -50,13 +34,8 @@ public class StateRadio extends StateAdapter {
     @Override
     public void onClick_Min(ContextClockradio context) {
 
-        if (amChosen) {
-            amFrequency += 0.1;
-            context.ui.setDisplayText(amFrequency + " AM");
-        } else {
             fmFrequency += 0.1;
             context.ui.setDisplayText(fmFrequency + " FM");
-        }
     }
 
     /**
@@ -65,17 +44,7 @@ public class StateRadio extends StateAdapter {
      */
     @Override
     public void onClick_Power(ContextClockradio context) {
-
-        if (amChosen) {
-            System.out.println("fm choseen");
-            setAmChosen(false);
-            context.ui.setDisplayText(fmFrequency+"");
-
-        } else  {
-            System.out.println("am chosen");
-            setAmChosen(true);
-            context.ui.setDisplayText(amFrequency+"");
-        }
+        context.setState(new StateRadioAM());
     }
 
     /**
@@ -84,11 +53,13 @@ public class StateRadio extends StateAdapter {
      */
     @Override
     public void onLongClick_Power(ContextClockradio context) {
-        context.setAmChosen(isAmChosen());
+        context.setState(new StateSaveFMPreset(fmFrequency));
+    }
+
+    @Override
+    public void onExitState(ContextClockradio context) {
         context.setFmFrequency(fmFrequency);
-        context.setAmFrequency(amFrequency);
         context.ui.toggleRadioPlaying();
-        context.setState(new StateStandby(context.getTime()));
     }
 
     /**
@@ -97,20 +68,11 @@ public class StateRadio extends StateAdapter {
      */
     @Override
     public void onLongClick_Preset(ContextClockradio context) {
-        context.setState(new StateSavePreset(amChosen));
+        context.setState(new StateSaveFMPreset(fmFrequency));
     }
 
     @Override
     public void onClick_Preset(ContextClockradio context) {
         //context.ui.turnOffTextBlink();
     }
-
-    public boolean isAmChosen() {
-        return amChosen;
-    }
-
-    public void setAmChosen(boolean amChosen) {
-        this.amChosen = amChosen;
-    }
 }
-
