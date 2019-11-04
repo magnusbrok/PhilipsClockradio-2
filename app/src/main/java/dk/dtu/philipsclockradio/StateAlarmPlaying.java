@@ -4,6 +4,10 @@ import android.os.CountDownTimer;
 
 import java.util.Date;
 
+/**
+ * Currently this state is never started. That is because i dont know how to do the check for when the
+ * alarm goes off. There is also missing some indefication as to which type of alarm goes off ergo AL1 or AL2.
+ */
 public class StateAlarmPlaying extends StateAdapter {
 
     private CountDownTimer idleTimer;
